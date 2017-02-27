@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Paddle : MonoBehaviour {
 
+	public float minX, maxX;
 
 
 	// Use this for initialization
@@ -16,7 +17,7 @@ public class Paddle : MonoBehaviour {
 
 		float mousePosInBlocks = Input.mousePosition.x / Screen.width * 16;
 
-		paddlePos.x = Mathf.Clamp(mousePosInBlocks, 0f, 15f);
+		paddlePos.x = Mathf.Clamp(mousePosInBlocks, minX, maxX);
 
 		this.transform.position = paddlePos;
 	}
