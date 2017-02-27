@@ -6,6 +6,9 @@ public class Brick : MonoBehaviour {
 	private LevelManager levelManager;
 	public Sprite[] hitSprites;
 	public static int breakableCount = 0;
+
+	public GameObject smoke;
+
 	private int timesHit;
 	private bool isBreakable;
 
@@ -20,11 +23,10 @@ public class Brick : MonoBehaviour {
 		}
 		timesHit = 0;
 		levelManager = GameObject.FindObjectOfType<LevelManager>();
-	}
+			}
 
 	// Update is called once per frame
 	void Update () {
-
 	}
 
 	void OnCollisionEnter2D (Collision2D col) {
@@ -42,9 +44,15 @@ public class Brick : MonoBehaviour {
 			breakableCount--;
 			levelManager.BrickDestroyed ();
 			Destroy (gameObject);
+			SmokePuff();
 		} else {
 			LoadSprites ();
 		}
+	}
+	void SmokePuff() {
+		GameObject smokePuff = Instantiate(smoke, gameObject.transform.position, Quaternion.identity) as GameObject;
+		ParticleSystem.MainModule main = smokePuff.GetComponent<ParticleSystem>().main;
+		main.startColor = GetComponent<SpriteRenderer>().color;
 	}
 
 	void LoadSprites() {
@@ -55,4 +63,4 @@ public class Brick : MonoBehaviour {
 			Debug.LogError ("Brick sprite missing");
 			}
 		}
-	}
+}
